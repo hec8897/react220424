@@ -1,7 +1,8 @@
+import List from "./List";
+
 interface listType {
   id: number;
   name: string;
-  desc: string;
   active: boolean;
 }
 
@@ -9,18 +10,23 @@ interface props {
   TodoList: Array<listType>;
   onActive: (id: number) => void;
   onRemove: (id: number) => void;
+  onUpdate: (id: number, name: string) => void;
 }
 
-function TodoList({ TodoList, onActive, onRemove }: props) {
+function TodoList({ TodoList, onActive, onRemove, onUpdate }: props) {
   return (
     <div>
       <ul>
         {TodoList.map((ele) => (
-          <li key={ele.id} style={{ color: ele.active ? "red" : "#222" }}>
-            <div>
-              <b onClick={() => onActive(ele.id)}>{ele.name}</b> : {ele.desc}
-              <button onClick={() => onRemove(ele.id)}>삭제</button>
-            </div>
+          <li style={{ color: ele.active ? "red" : "#222" }} key={ele.id}>
+            <List
+              id={ele.id}
+              name={ele.name}
+              active={ele.active}
+              onActive={onActive}
+              onRemove={onRemove}
+              onUpdate={onUpdate}
+            ></List>
           </li>
         ))}
       </ul>
